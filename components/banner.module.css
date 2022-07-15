@@ -1,6 +1,8 @@
 /** By default, this is a mobile breakpoint **/
 .container {
   margin-bottom: 1rem;
+  position: relative;
+  z-index: 2;
 }
 
 .title {
@@ -52,18 +54,8 @@
   background-color: var(--text-purple-dark);
 }
 
-/** 
-  Breakpoints:
-  ------------
-  sm: min-width: 640px; //small device
-  md: min-width: 768px; // medium device
-  lg: min-width: 1024px; // large device
-  xl: min-width: 1280px; // extra large device
-  2xl: min-width: 1536px; // 2 x extra large device
-**/
-
 /** sm breakpoint **/
-@media (min-width: 640px) {
+@media (min-width: var(--sm-screen)) {
   .title {
     font-size: 3rem /* 48px */;
     line-height: 1;
@@ -81,7 +73,7 @@
 }
 
 /** md breakpoint **/
-@media (min-width: 768px) {
+@media (min-width: var(--md-screen)) {
   .title {
     font-size: 3.75rem /* 60px */;
     line-height: 1;
@@ -102,7 +94,7 @@
 }
 
 /** lg breakpoint **/
-@media (min-width: 1024px) {
+@media (min-width: var(--lg-screen)) {
   .container {
     text-align: left;
   }
@@ -127,7 +119,7 @@
 }
 
 /** xl breakpoint **/
-@media (min-width: 1280px) {
+@media (min-width: var(--xl-screen)) {
   .title2 {
     display: inline;
   }
