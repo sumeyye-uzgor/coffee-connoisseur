@@ -41,13 +41,13 @@
   border-radius: 0.75rem /* 12px */;
 }
 
-@media (min-width: var(--lg-screen)) {
+@media (min-width: 1024px) {
   .cardHeader {
     width: 16rem /* 256px */;
   }
 }
 
-@media (min-width: var(--md-screen)) {
+@media (min-width: 768px) {
   .cardHeader {
     width: 16rem /* 256px */;
   }

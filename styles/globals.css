@@ -67,11 +67,6 @@ button:focus {
   xl: min-width: 1280px; // extra large device
   2xl: min-width: 1536px; // 2 x extra large device
 **/
-  --sm-screen: 640px;
-  --md-screen: 768px;
-  --lg-screen: 1024px;
-  --xl-screen: 1280px;
-  --2xl-screen: 1536px;
   --text-purple: rgba(67, 56, 202, 1);
   --text-purple-dark: rgba(79, 70, 229, 1);
   --text-black: rgba(17, 24, 39, 1);

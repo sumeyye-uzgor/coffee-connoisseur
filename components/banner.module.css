@@ -55,7 +55,7 @@
 }
 
 /** sm breakpoint **/
-@media (min-width: var(--sm-screen)) {
+@media (min-width: 640px) {
   .title {
     font-size: 3rem /* 48px */;
     line-height: 1;
@@ -73,7 +73,7 @@
 }
 
 /** md breakpoint **/
-@media (min-width: var(--md-screen)) {
+@media (min-width: 768px) {
   .title {
     font-size: 3.75rem /* 60px */;
     line-height: 1;
@@ -94,7 +94,7 @@
 }
 
 /** lg breakpoint **/
-@media (min-width: var(--lg-screen)) {
+@media (min-width: 1024px) {
   .container {
     text-align: left;
   }
@@ -119,7 +119,7 @@
 }
 
 /** xl breakpoint **/
-@media (min-width: var(--xl-screen)) {
+@media (min-width: 1280px) {
   .title2 {
     display: inline;
   }
