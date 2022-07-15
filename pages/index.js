@@ -4,6 +4,8 @@ import Image from "next/image";
 import Banner from "../components/banner";
 import Card from "../components/card";
 
+import coffeeStores from "../data/coffee-stores.json";
+
 import styles from "../styles/Home.module.css";
 
 export default function Home() {
@@ -32,48 +34,15 @@ export default function Home() {
           />
         </div>
         <div className={styles.cardLayout}>
-          <Card
-            imgUrl="/static/hero-image.png"
-            name="Coffee Store"
-            id="store1"
-            className={styles.card}
-          />
-          <Card
-            imgUrl="/static/hero-image.png"
-            name="Coffee Store"
-            id="store1"
-            className={styles.card}
-          />{" "}
-          <Card
-            imgUrl="/static/hero-image.png"
-            name="Coffee Store"
-            id="store1"
-            className={styles.card}
-          />{" "}
-          <Card
-            imgUrl="/static/hero-image.png"
-            name="Coffee Store"
-            id="store1"
-            className={styles.card}
-          />{" "}
-          <Card
-            imgUrl="/static/hero-image.png"
-            name="Coffee Store"
-            id="store1"
-            className={styles.card}
-          />{" "}
-          <Card
-            imgUrl="/static/hero-image.png"
-            name="Coffee Store"
-            id="store1"
-            className={styles.card}
-          />{" "}
-          <Card
-            imgUrl="/static/hero-image.png"
-            name="Coffee Store"
-            id="store1"
-            className={styles.card}
-          />
+          {coffeeStores.map((coffeeStore) => (
+            <Card
+              key={coffeeStore.id}
+              imgUrl={coffeeStore.imgUrl}
+              name={coffeeStore.name}
+              id={coffeeStore.id}
+              className={styles.card}
+            />
+          ))}
         </div>
       </main>
     </div>
