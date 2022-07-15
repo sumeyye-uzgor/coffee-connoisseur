@@ -8,7 +8,15 @@ import coffeeStores from "../data/coffee-stores.json";
 
 import styles from "../styles/Home.module.css";
 
-export default function Home() {
+export async function getStaticProps(context) {
+  return {
+    props: {
+      coffeeStores,
+    }, // will be passed to the page component as props
+  };
+}
+export default function Home({ coffeeStores }) {
+  console.log(coffeeStores);
   const handleOnBannerButtonClick = () => {
     console.log("clikced");
   };
