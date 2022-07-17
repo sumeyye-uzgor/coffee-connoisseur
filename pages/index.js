@@ -41,17 +41,24 @@ export default function Home({ coffeeStores }) {
             height={400}
           />
         </div>
-        <div className={styles.cardLayout}>
-          {coffeeStores.map((coffeeStore) => (
-            <Card
-              key={coffeeStore.id}
-              imgUrl={coffeeStore.imgUrl}
-              name={coffeeStore.name}
-              id={coffeeStore.id}
-              className={styles.card}
-            />
-          ))}
-        </div>
+        {coffeeStores.length > 0 ? (
+          <>
+            <h2 className={styles.heading2}>Toronto coffee stores</h2>
+            <div className={styles.cardLayout}>
+              {coffeeStores.map((coffeeStore) => (
+                <Card
+                  key={coffeeStore.id}
+                  imgUrl={coffeeStore.imgUrl}
+                  name={coffeeStore.name}
+                  id={coffeeStore.id}
+                  className={styles.card}
+                />
+              ))}
+            </div>
+          </>
+        ) : (
+          <div>No data fiound</div>
+        )}
       </main>
     </div>
   );
