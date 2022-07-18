@@ -16,7 +16,6 @@ export async function getStaticProps(context) {
   };
 }
 export default function Home({ coffeeStores }) {
-  console.log(coffeeStores);
   const handleOnBannerButtonClick = () => {
     console.log("clikced");
   };
