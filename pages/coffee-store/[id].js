@@ -4,22 +4,25 @@ import Head from "next/head";
 import Image from "next/image";
 import cls from "classnames";
 
-import coffeeStores from "../../data/coffee-stores.json";
+// import coffeeStores from "../../data/coffee-stores.json";
+import fetchCoffeeStores from "../../lib/coffee-stores";
 
 import styles from "../../styles/coffee-store.module.css";
 
-export function getStaticProps({ params }) {
+export async function getStaticProps({ params }) {
+  const coffeeStores = await fetchCoffeeStores();
   return {
     props: {
       coffeeStore: coffeeStores.find(
-        (store) => store.id.toString() === params.id
+        (store) => store.fsq_id.toString() === params.id
       ),
     },
   };
 }
-export function getStaticPaths() {
+export async function getStaticPaths() {
+  const coffeeStores = await fetchCoffeeStores();
   return {
-    paths: coffeeStores.map((store) => ({ params: { id: `${store.id}` } })),
+    paths: coffeeStores.map((store) => ({ params: { id: `${store.fsq_id}` } })),
     fallback: true,
   };
 }
@@ -28,7 +31,7 @@ const Store = (props) => {
   if (router.isFallback) {
     return <div>Loading...</div>;
   }
-  const { address, name, neighbourhood, imgUrl } = props.coffeeStore;
+  const { location, name, imgUrl } = props.coffeeStore;
   const rate = 3;
   const handleUpvoteButton = () => {
     console.log("upvoted");
@@ -49,7 +52,10 @@ const Store = (props) => {
             <h1 className={styles.name}>{name}</h1>
           </div>
           <Image
-            src={imgUrl}
+            src={
+              imgUrl ||
+              "https://images.unsplash.com/photo-1504753793650-d4a2b783c15e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2000&q=80"
+            }
             alt={name}
             width={600}
             height={360}
@@ -65,7 +71,7 @@ const Store = (props) => {
               height={24}
               className={styles.icon}
             />
-            <p className={styles.text}>{address}</p>
+            <p className={styles.text}>{location.address}</p>
           </div>
           <div className={styles.iconWrapper}>
             <Image
@@ -75,7 +81,9 @@ const Store = (props) => {
               height={24}
               className={styles.icon}
             />
-            <p className={styles.text}>{neighbourhood}</p>
+            {location.neighborhood && (
+              <p className={styles.text}>{location.neighborhood[0]}</p>
+            )}
           </div>
           <div className={styles.iconWrapper}>
             <Image
