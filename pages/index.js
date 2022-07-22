@@ -7,6 +7,7 @@ import fetchCoffeeStores from "../lib/coffee-stores";
 import useTrackLocation from "../hooks/use-track-location";
 
 import styles from "../styles/Home.module.css";
+import { useEffect, useState } from "react";
 
 export async function getStaticProps(context) {
   const coffeeStores = await fetchCoffeeStores();
@@ -16,14 +17,33 @@ export async function getStaticProps(context) {
     }, // will be passed to the page component as props
   };
 }
-export default function Home({ coffeeStores }) {
+export default function Home(props) {
   const { handleTrackLocation, latLong, locationErrorMsg, isFindingLocation } =
     useTrackLocation();
-  console.log({ latLong });
-  console.log({ locationErrorMsg });
+  const [coffeeStores, setCoffeeStores] = useState();
+  const [heading, setHeading] = useState("Istanbul Coffee Stores");
+  const [coffeeStoresError, setCoffeeStoresError] = useState(null);
+  useEffect(() => {
+    if (latLong) {
+      try {
+        const fetchData = async () => {
+          const fetchedCoffeeStore = await fetchCoffeeStores(latLong, 30);
+          console.log({ fetchedCoffeeStore });
+          setHeading("Stores near me");
+          setCoffeeStores(fetchedCoffeeStore);
+        };
+        fetchData();
+      } catch (error) {
+        setCoffeeStoresError(error.message);
+      }
+    }
+  }, [latLong]);
   const handleOnBannerButtonClick = () => {
     handleTrackLocation();
   };
+  useEffect(() => setCoffeeStores(props.coffeeStores), []);
+
+  useEffect(() => console.log({ coffeeStores }), [coffeeStores]);
   return (
     <div className={styles.container}>
       <Head>
@@ -38,6 +58,10 @@ export default function Home({ coffeeStores }) {
           handleOnClick={handleOnBannerButtonClick}
         />
         {locationErrorMsg && <p>Something went wrong... {locationErrorMsg}</p>}
+        {coffeeStoresError && (
+          <p>Something went wrong... {coffeeStoresError}</p>
+        )}
+
         <div className={styles.heroImage}>
           <Image
             src="/static/hero-image.png"
@@ -47,9 +71,9 @@ export default function Home({ coffeeStores }) {
           />
         </div>
         <div className={styles.sectionWrapper}>
-          {coffeeStores.length > 0 ? (
+          {coffeeStores?.length > 0 ? (
             <>
-              <h2 className={styles.heading2}>Toronto coffee stores</h2>
+              <h2 className={styles.heading2}>{heading}</h2>
               <div className={styles.cardLayout}>
                 {coffeeStores.map((coffeeStore) => (
                   <Card
