@@ -20,8 +20,7 @@ export async function getStaticProps(context) {
 export default function Home(props) {
   const { handleTrackLocation, latLong, locationErrorMsg, isFindingLocation } =
     useTrackLocation();
-  const [coffeeStores, setCoffeeStores] = useState();
-  const [heading, setHeading] = useState("Istanbul Coffee Stores");
+  const [coffeeStores, setCoffeeStores] = useState(null);
   const [coffeeStoresError, setCoffeeStoresError] = useState(null);
   useEffect(() => {
     if (latLong) {
@@ -29,7 +28,6 @@ export default function Home(props) {
         const fetchData = async () => {
           const fetchedCoffeeStore = await fetchCoffeeStores(latLong, 30);
           console.log({ fetchedCoffeeStore });
-          setHeading("Stores near me");
           setCoffeeStores(fetchedCoffeeStore);
         };
         fetchData();
@@ -41,9 +39,6 @@ export default function Home(props) {
   const handleOnBannerButtonClick = () => {
     handleTrackLocation();
   };
-  useEffect(() => setCoffeeStores(props.coffeeStores), []);
-
-  useEffect(() => console.log({ coffeeStores }), [coffeeStores]);
   return (
     <div className={styles.container}>
       <Head>
@@ -71,9 +66,9 @@ export default function Home(props) {
           />
         </div>
         <div className={styles.sectionWrapper}>
-          {coffeeStores?.length > 0 ? (
+          {coffeeStores?.length > 0 && (
             <>
-              <h2 className={styles.heading2}>{heading}</h2>
+              <h2 className={styles.heading2}>Stores near me</h2>
               <div className={styles.cardLayout}>
                 {coffeeStores.map((coffeeStore) => (
                   <Card
@@ -89,8 +84,29 @@ export default function Home(props) {
                 ))}
               </div>
             </>
+          )}
+        </div>
+        <div className={styles.sectionWrapper}>
+          {props.coffeeStores?.length > 0 ? (
+            <>
+              <h2 className={styles.heading2}>Istanbul Coffee Stores</h2>
+              <div className={styles.cardLayout}>
+                {props.coffeeStores.map((coffeeStore) => (
+                  <Card
+                    key={coffeeStore.id}
+                    imgUrl={
+                      coffeeStore?.imgUrl ||
+                      "https://images.unsplash.com/photo-1504753793650-d4a2b783c15e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2000&q=80"
+                    }
+                    name={coffeeStore.name}
+                    id={coffeeStore.id}
+                    className={styles.card}
+                  />
+                ))}
+              </div>
+            </>
           ) : (
-            <div>No data fiound</div>
+            <div>No data found</div>
           )}
         </div>
       </main>
