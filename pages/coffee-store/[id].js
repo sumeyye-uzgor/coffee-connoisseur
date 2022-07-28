@@ -4,7 +4,7 @@ import Head from "next/head";
 import Image from "next/image";
 import cls from "classnames";
 import { useContext, useEffect, useState } from "react";
-import { ACTION_TYPES, StoreContext } from "../../pages/_app";
+import { ACTION_TYPES, StoreContext } from "../../store/store-context";
 // import coffeeStores from "../../data/coffee-stores.json";
 import fetchCoffeeStores from "../../lib/coffee-stores";
 import { isEmpty } from "../../utils";
