@@ -36,21 +36,50 @@ const Store = (initialProps) => {
   } = useContext(StoreContext);
   const { id } = router.query;
   const [coffeeStore, setCoffeeStore] = useState(initialProps.coffeeStore);
+  const handleCreateCoffeeStore = async (coffeeStore) => {
+    console.log({ coffeeStore });
+    const { id, name, neighborhood, address, voting, imgUrl } = coffeeStore;
+    try {
+      const response = await fetch("/api/createCoffeeStore", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id,
+          name,
+          neighborhood: neighborhood[0] || "",
+          address: address || "",
+          voting: voting || 0,
+          imgUrl,
+        }),
+      });
+      const dbCoffeeStore = await response.json();
+      console.log({ dbCoffeeStore });
+    } catch (error) {
+      console.error("Error creating coffee store", error);
+    }
+  };
   useEffect(() => {
     if (isEmpty(initialProps.coffeeStore)) {
       if (coffeeStores.length > 0) {
-        const findCoffeeStoreById = coffeeStores.find(
+        const coffeeStoreFromContext = coffeeStores.find(
           (store) => store.id.toString() === id
         );
-        setCoffeeStore(findCoffeeStoreById);
+        if (coffeeStoreFromContext) {
+          setCoffeeStore(coffeeStoreFromContext);
+          handleCreateCoffeeStore(coffeeStoreFromContext);
+        }
       }
+    } else {
+      handleCreateCoffeeStore(initialProps.coffeeStore);
     }
-  }, [id]);
+  }, [id, initialProps, initialProps.coffeeStore]);
   if (router.isFallback) {
     return <div>Loading...</div>;
   }
   const { address, neighborhood, name, imgUrl } = coffeeStore;
-  const rate = 3;
+  const voting = 3;
 
   const handleUpvoteButton = () => {
     console.log("upvoted");
@@ -114,7 +143,7 @@ const Store = (initialProps) => {
               height={24}
               className={styles.icon}
             />
-            <p className={styles.text}>{rate}</p>
+            <p className={styles.text}>{voting}</p>
           </div>
           <button className={styles.upvoteButton} onClick={handleUpvoteButton}>
             Up vote!
