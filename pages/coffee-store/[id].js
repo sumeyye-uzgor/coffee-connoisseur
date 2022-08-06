@@ -1,19 +1,14 @@
-import { useContext, useState, useEffect } from "react";
-import { useRouter } from "next/router";
-import Link from "next/link";
+import { fetcher, isEmpty } from "../../utils";
+import { useContext, useEffect, useState } from "react";
 import Head from "next/head";
 import Image from "next/image";
-
-import useSWR from "swr";
-
-import cls from "classnames";
-
-import styles from "../../styles/coffee-store.module.css";
-import fetchCoffeeStores from "../../lib/coffee-stores";
-
+import Link from "next/link";
 import { StoreContext } from "../../store/store-context";
-
-import { fetcher, isEmpty } from "../../utils";
+import cls from "classnames";
+import fetchCoffeeStores from "../../lib/coffee-stores";
+import styles from "../../styles/coffee-store.module.css";
+import { useRouter } from "next/router";
+import useSWR from "swr";
 
 export async function getStaticProps(staticProps) {
   const params = staticProps.params;

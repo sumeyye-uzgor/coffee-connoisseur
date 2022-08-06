@@ -1,4 +1,4 @@
-import { table, getMinifiedRecord, findRecordByFilter } from "./airtable";
+import { findRecordByFilter, getMinifiedRecord, table } from "./airtable";
 
 const upvoteCoffeeStore = async (req, res) => {
   if (req.method === "PUT") {
