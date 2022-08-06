@@ -98,7 +98,7 @@ const CoffeeStore = (initialProps) => {
     imgUrl = "",
   } = coffeeStore;
   const [votingCount, setVotingCount] = useState(
-    initialProps.coffeeStore.voting || 0
+    initialProps?.coffeeStore?.voting || 0
   );
 
   const { data, error } = useSWR(`/api/getCoffeeStoreById?id=${id}`, fetcher);
