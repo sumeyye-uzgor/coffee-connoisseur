@@ -5,7 +5,10 @@ const base = new Airtable({ apiKey: process.env.AIRTABLE_API_KEY }).base(
 
 const table = base("coffee-stores");
 
-const getMinifiedRecord = (record) => ({ ...record.fields });
+const getMinifiedRecord = (record) => ({
+  recordId: record.id,
+  ...record.fields,
+});
 
 const getMinifiedRecords = (records) =>
   records.map((record) => getMinifiedRecord(record));
@@ -19,4 +22,4 @@ const findRecordByFilter = async (id) => {
 
   return getMinifiedRecords(findCoffeeStoreRecords);
 };
-export { table, getMinifiedRecords, findRecordByFilter };
+export { table, getMinifiedRecords, findRecordByFilter, getMinifiedRecord };
