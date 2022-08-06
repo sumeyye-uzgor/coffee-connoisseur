@@ -36,6 +36,7 @@ const Store = (initialProps) => {
   } = useContext(StoreContext);
   const { id } = router.query;
   const [coffeeStore, setCoffeeStore] = useState(initialProps.coffeeStore);
+  const [votingCount, setVotingCount] = useState(0);
   const handleCreateCoffeeStore = async (coffeeStore) => {
     console.log({ coffeeStore });
     const { id, name, neighborhood, address, voting, imgUrl } = coffeeStore;
@@ -79,10 +80,9 @@ const Store = (initialProps) => {
     return <div>Loading...</div>;
   }
   const { address, neighborhood, name, imgUrl } = coffeeStore;
-  const voting = 3;
 
   const handleUpvoteButton = () => {
-    console.log("upvoted");
+    setVotingCount((votingCount) => votingCount + 1);
   };
   return (
     <div className={styles.layout}>
@@ -143,7 +143,7 @@ const Store = (initialProps) => {
               height={24}
               className={styles.icon}
             />
-            <p className={styles.text}>{voting}</p>
+            <p className={styles.text}>{votingCount}</p>
           </div>
           <button className={styles.upvoteButton} onClick={handleUpvoteButton}>
             Up vote!
